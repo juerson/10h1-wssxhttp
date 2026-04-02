@@ -30,6 +30,8 @@ openssl rand -base64 16
 openssl rand -base64 32
 ```
 
+注意：xhttp需要自备域名，且开启gRPC。
+
 ## 二、本地部署
 
 将全部代码下载/`git clone`拉取到本地电脑，然后根据下面方法部署。
