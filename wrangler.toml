@@ -1,0 +1,49 @@
+name = "10h1-wssxhttp"
+main = "build/worker/shim.mjs"
+compatibility_date = "2024-05-23"
+workers_dev = true
+minify = true
+
+[observability]
+enabled = false
+
+[[kv_namespaces]]
+binding = "mykv"
+id = "470417323ac346559960f435c5abd424" # 重点修改，改为自己的，手动在CF后台创建KV的SIREN对应ID
+
+[build]
+command = "cargo install worker-build && worker-build --release"
+
+# [env.dev]
+# build = { command = "cargo install worker-build && worker-build --dev" }
+
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["WsChan"]
+
+[[durable_objects.bindings]]
+name = "WS_CHAN"
+class_name = "WsChan"
+
+[vars]
+ID = "ac3038d3-2fd3-47bc-8f49-1210ecb632eb" # 凡是节点中，用到的uuid、密码都共用它，加密ss除外
+HOST_PORT = ""                              # 这里指的是POXYIP，格式：`[host][:PORT]`，不是 `[host]-port` 这种格式
+
+# 是否启用在DO内部运行xhttp
+X_IN_DO = "true" # 默认false，在普通worker中运行，启用的话，这里要手动设置为true
+
+# 无加密ss协议
+S_NONE_ON = "true"              # 总开关，开启/关闭
+S_NONE_RULES = "0.0.0.0/0,::/0" # 小开关，只允许这里的IP或CIDR的地址使用，多个值用逗号隔开
+
+# 有加密ss协议
+S_AEAD_ON = "true"                        # 开关
+S_AEAD_METHOD = "2022-blake3-aes-128-gcm" # 加密方式(6选1)
+S_AEAD_PWD = "27y1vAUPTtrJTjOrcTODWw=="   # 密码
+S_AEAD_PATH = "/ss"                       # 由于加密ss跟vmess都使用，不能自动识别，故设置这个路径来区分，在加密ss的路径中添加，默认是`/ss`。
+
+# (可选) 部署到哪里：["wnam", "enam", "sam", "weur", "eeur", "apac", "oc", "afr", "me"]
+# LOCATION_HINT = "wnam"
+
+# (可选) URL不可用，就换成其它的URL，会下载存储到KV，不是每次都用到它
+# KV_DATA_URL = "https://raw.githubusercontent.com/FoolVPN-ID/Nautica/refs/heads/main/kvProxyList.json"
