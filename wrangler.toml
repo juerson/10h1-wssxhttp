@@ -42,8 +42,5 @@ S_AEAD_METHOD = "2022-blake3-aes-128-gcm" # 加密方式(6选1)
 S_AEAD_PWD = "27y1vAUPTtrJTjOrcTODWw=="   # 密码
 S_AEAD_PATH = "/ss"                       # 由于加密ss跟vmess都使用，不能自动识别，故设置这个路径来区分，在加密ss的路径中添加，默认是`/ss`。
 
-# (可选) 部署到哪里：["wnam", "enam", "sam", "weur", "eeur", "apac", "oc", "afr", "me"]
-# LOCATION_HINT = "wnam"
-
 # (可选) URL不可用，就换成其它的URL，会下载存储到KV，不是每次都用到它
 # KV_DATA_URL = "https://raw.githubusercontent.com/FoolVPN-ID/Nautica/refs/heads/main/kvProxyList.json"
