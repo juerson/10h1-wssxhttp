@@ -12,11 +12,7 @@ pub struct Config {
     pub ss_method: Option<String>,
     pub ss_password: Option<String>,
     pub ss_aead_path: String,
-    pub kv_data_url: String,
 }
-
-const KV_DATA_URL: &str =
-    "https://raw.githubusercontent.com/FoolVPN-ID/Nautica/refs/heads/main/kvProxyList.json";
 
 fn env_str(env: &Env, key: &str, default: &str) -> String {
     env.var(key)
@@ -61,7 +57,6 @@ pub fn build_config(req: &Request, env: &Env) -> Result<Config> {
         ss_method: Some(env_str(env, "S_AEAD_METHOD", "aes-128-gcm")),
         ss_password: Some(env_str(env, "S_AEAD_PWD", "VLa7YZ2OHGZFmx1gCDVv")),
         ss_aead_path: env_str(env, "S_AEAD_PATH", "/ss"),
-        kv_data_url: env_str(env, "KV_DATA_URL", KV_DATA_URL),
     })
 }
 
